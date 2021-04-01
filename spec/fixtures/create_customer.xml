@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<account>
+     <username>acme_customer</username>
+     <password>PA$sw0r6</password>
+     <webserviceUser>true</webserviceUser>
+     <searchable>false</searchable>
+     <billboardMetric>score</billboardMetric>
+     <contact>
+          <firstName>Jack</firstName>
+          <lastName>Brown</lastName>
+          <address address1="123 South St" city="Arlington" state="VA" postalCode="22201" country="US"/>
+          <email>jack_brown@acme.com</email>
+          <jobTitle>Building Administrator Data Exchange User</jobTitle>
+          <phone>703-555-2121</phone>
+     </contact>
+     <organization name="ACME Corporation">
+          <primaryBusiness>Other</primaryBusiness>
+          <otherBusinessDescription>other</otherBusinessDescription>
+          <energyStarPartner>true</energyStarPartner>
+          <energyStarPartnerType>Service and Product Providers</energyStarPartnerType>
+     </organization>
+</account>

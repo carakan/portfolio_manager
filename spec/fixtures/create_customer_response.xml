@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response status="Ok">
+     <id>23421</id>
+     <links>
+          <link httpMethod="GET" link="/customer/23421" linkDescription="This is the GET url for this Customer."/>
+     </links>
+</response>
