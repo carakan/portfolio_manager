@@ -78,6 +78,17 @@ module PortfolioManager
       def create_meter_consumption_data(meter_id, post_data)
         perform_post_request("/meter/#{meter_id}/consumptionData", body: post_data)
       end
+      
+      # This web service retrieves consumption data for a specific meter. The meter must already be shared with you. The consumption data is returned in sets of 120. An optional date range can specified to return a certain set of consumption records.
+      # https://portfoliomanager.energystar.gov/webservices/home/api/meter/consumptionData/get
+      def meter_comsuption_data(meter_id, start_date = nil, end_date = nil, page = 1)
+        perform_get_request(
+          "/meter/#{property_id}/consumptionData",
+          query: {
+            startDate: start_date, endDate: end_date, page: page
+          }
+        )
+      end
     end
   end
 end
