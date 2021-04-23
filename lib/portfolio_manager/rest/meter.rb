@@ -83,7 +83,7 @@ module PortfolioManager
       # https://portfoliomanager.energystar.gov/webservices/home/api/meter/consumptionData/get
       def meter_comsuption_data(meter_id, start_date = nil, end_date = nil, page = 1)
         perform_get_request(
-          "/meter/#{property_id}/consumptionData",
+          "/meter/#{meter_id}/consumptionData",
           query: {
             startDate: start_date, endDate: end_date, page: page
           }
