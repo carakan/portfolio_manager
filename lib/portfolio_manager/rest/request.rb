@@ -6,13 +6,14 @@ module PortfolioManager
     ##
     # Manage HTTP requests
     class Request
-      BASE_URL  = 'https://portfoliomanager.energystar.gov'
+      BASE_URL = 'https://portfoliomanager.energystar.gov'
       LIVE_PATH = '/ws'
       TEST_PATH = '/wstest'
       CONTENT_TYPE = 'application/xml'
 
       attr_reader :client, :path, :request_method, :parser
       attr_accessor :options
+
       ##
       # @param [PortfolioManager::Client] client
       # @param [Symbol, String] request_method
@@ -31,19 +32,23 @@ module PortfolioManager
       ##
       # @return [Hash]
       def perform
-        parser.parse(response_body)
+        body_parsed = parser.parse(response.body)
+        if response_body.success?
+          body_parsed
+        else
+          { error: { code: response.status_code, payload: body_parsed } }
+        end
       end
 
       private
 
-      ##
       # @return [String]
       def response_body
         case request_method
         when :get
-          @conn.get(path).body
+          @conn.get(path)
         when :post
-          @conn.post(path, options[:body], CONTENT_TYPE).body
+          @conn.post(path, options[:body], CONTENT_TYPE)
         else
           raise ArgumentError, '#{request_method} is not yet implemented'
         end
@@ -57,16 +62,14 @@ module PortfolioManager
 
       def set_header
         @conn.header[:user_agent] = 'Ruby PortfolioManager API Client'
-        @conn.header[:content_type] = "application/xml" if request_method == :post
-        options[:header].each do |key, value|
-          @conn.header[key] = value
-        end unless options[:header].nil?
+        @conn.header[:content_type] = 'application/xml' if request_method == :post
+        unless options[:header].nil?
+          options[:header].each { |key, value| @conn.header[key] = value }
+        end
       end
 
       def set_query
-        options[:query].each do |key, value|
-          @conn.query[key] = value
-        end unless options[:query].nil?
+        options[:query].each { |key, value| @conn.query[key] = value } unless options[:query].nil?
       end
 
       def set_basic_authentication
@@ -75,11 +78,7 @@ module PortfolioManager
       end
 
       def api_environment
-        if client.live
-          LIVE_PATH
-        else
-          TEST_PATH
-        end
+        client.live ? LIVE_PATH : TEST_PATH
       end
     end
   end
