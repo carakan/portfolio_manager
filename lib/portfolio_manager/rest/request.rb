@@ -32,11 +32,11 @@ module PortfolioManager
       ##
       # @return [Hash]
       def perform
-        body_parsed = parser.parse(response.body)
+        body_parsed = parser.parse(response_body.body)
         if response_body.success?
           body_parsed
         else
-          { error: { code: response.status_code, payload: body_parsed } }
+          { error: { code: response_body.status_code, payload: body_parsed } }
         end
       end
 
