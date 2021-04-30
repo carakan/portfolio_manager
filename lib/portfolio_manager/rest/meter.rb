@@ -90,10 +90,7 @@ module PortfolioManager
       def meter_consumption_data(meter_id, start_date = nil, end_date = nil, page = 1)
         if start_date.nil? || end_date.nil?
           perform_get_request(
-            "/meter/#{meter_id}/consumptionData",
-            query: {
-              page: page
-            }
+            "/meter/#{meter_id}/consumptionData"
           )
         else
           perform_get_request(
